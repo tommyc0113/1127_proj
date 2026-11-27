@@ -1,0 +1,42 @@
+{
+  "report_categories": {
+    "count": 6,
+    "sha256": "ba783500a2727faa4a581e5941cd26daa160ca1edb2751d56dea13589fd19f84"
+  },
+  "reports": {
+    "count": 180,
+    "sha256": "1d0a1ae47fa8bf72afae2627093c86f5d5028c6938c25f818deafd347a3398de"
+  },
+  "report_embeddings": {
+    "count": 180,
+    "sha256": "23200b3778b94d5c60eded09da81f4719610870bca1e30a6f1ee4c09c317cc8d"
+  },
+  "experiment_reports": {
+    "count": 30,
+    "sha256": "2d6b5a019292e20f28b7780ad306d8f20d0e6378b7aa223b29f71bed657ee856"
+  },
+  "daily_work_reports": {
+    "count": 30,
+    "sha256": "08774b81d8d522fe65a4e3cbabb9bb8e9c62bd280f0c133427ce836a69781649"
+  },
+  "research_plans": {
+    "count": 30,
+    "sha256": "1b9c5167dee8e549543169b9704358aef9e6820ed17b0eb157f5da92d6a3e7af"
+  },
+  "data_processing_reports": {
+    "count": 30,
+    "sha256": "c6aeb981be354771185da8531962fdb23d076f441dca240cdcfcecc0afb23c7b"
+  },
+  "prompt_reports": {
+    "count": 30,
+    "sha256": "ec77401aded52deb79d1263b5db8668e848bbefb687a1020e3ca9dc2b55ea543"
+  },
+  "prompt_versions": {
+    "count": 60,
+    "sha256": "13975864b7baebec9910de0271a4b289b941e95d0ae55723818a9a127796a2b6"
+  },
+  "meeting_minutes": {
+    "count": 30,
+    "sha256": "b3a767cbe452431dc5987d5022db0a383a2167382ab23520bbafba7d230d27b5"
+  }
+}
