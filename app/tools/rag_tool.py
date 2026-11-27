@@ -1,40 +1,50 @@
-"""B-10: report_id만 받으며 임의 SQL은 받지 않는다."""
+"""B-09: 모델이 호출 요청을 생성하더라도 Python은 별도로 입력을 검증한다."""
 import json
 from langchain.tools import tool
 from langchain_core.tools import InjectedToolCallId
 from typing import Annotated
-from pydantic import BaseModel,ConfigDict,ValidationError
-from app.schemas.agent import ReportId
+from pydantic import BaseModel, ConfigDict, ValidationError
+from app.schemas.agent import Query, Category, K
 from app.services.validator import check_tool_output
 from app.services.errors import ServiceError
 from app.rag.retriever import explicit_ids
 
-class LookupInput(BaseModel):
+class RagInput(BaseModel):
     model_config=ConfigDict(extra='forbid',strict=True)
-    report_id: ReportId
+    query: Query
+    category_code: Category | None=None
+    k: K=3
 
-def make_db_tool(repo,question,meter):
+def make_rag_tool(pipeline,settings,question,category,meter):
     @tool
-    def lookup_status(report_id: ReportId, tool_call_id: Annotated[str,InjectedToolCallId]) -> str:
-        """보고서 번호(양의 정수)의 현재 index_status, revision, embedding_fresh를 읽기 전용 조회한다. 문서 요약에는 사용하지 않는다."""
+    def rag_search(query: Query, tool_call_id: Annotated[str,InjectedToolCallId], category_code: Category | None=None, k: K=3) -> str:
+        """보고서의 기술적 내용, 근거, 요약을 실제 검색한다. query 1~300자, category_code는 6개 코드 또는 null, k는 1~5. 지정 보고서 번호를 보존한다. 상태 조회는 별도 도구다."""
         meter.reserve('tool')
         try:
-            args=LookupInput.model_validate({'report_id':report_id})
-            ids=explicit_ids(question)
-            if ids and args.report_id not in ids:
+            args=RagInput.model_validate({'query':query,'category_code':category_code,'k':k})
+            if args.k>settings.retrieve_k or (category is not None and args.category_code not in (None,category)):
                 raise ValueError()
-            result=check_tool_output('lookup_status',repo.lookup(args.report_id))
-            if result['report_id']!=args.report_id:
-                raise ServiceError('TOOL_CONTRACT_ERROR','wrong_report_id')
+            effective_category=category if category is not None else args.category_code
+            original_ids=explicit_ids(question)
+            query_ids=explicit_ids(args.query)
+            if original_ids and not query_ids<=original_ids:
+                raise ValueError()
+            # 원 질문에서 특정 ID가 있었는데 검색 인수에서 빠졌다면 안전하게 유지한다.
+            query=args.query
+            if original_ids and not query_ids:
+                query=' '.join(f'RPT-{i}' for i in sorted(original_ids))+' '+query
+                if len(query)>300:
+                    raise ValueError()
+            # BEGIN B-09
+            result=pipeline.run(question,query,effective_category,args.k,meter)
+            result=check_tool_output('rag_search',result)
+            # END B-09
         except (ValidationError,ValueError):
-            # Tool 입력 오류는 정상 조회로 기록하지 않고 ToolMessage error로 전달.
-            from langchain_core.tools import ToolException
-            raise ToolException('invalid_input') from None
+            result={'status':'error','query':'invalid_input','answer':'invalid_input','sources':[]}
         except ServiceError as exc:
             meter.fatal=exc
             raise
-        meter.save_tool(tool_call_id,'lookup_status',result,{'report_id':args.report_id})
+        meter.save_tool(tool_call_id,'rag_search',result,{'category_code':category,'k':k})
         return json.dumps(result,ensure_ascii=False)
-    lookup_status.handle_tool_error=True
-    lookup_status.handle_validation_error='invalid_input'
-    return lookup_status
+    rag_search.handle_validation_error="invalid_input"
+    return rag_search
