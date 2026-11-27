@@ -1,0 +1,627 @@
+{
+  "mode": "live_attempt",
+  "checks": {
+    "T-01": {
+      "state": "observed",
+      "details": {
+        "db": "ready",
+        "database": "report_agent_lab",
+        "pgvector": "0.8.7",
+        "categories": [
+          "DAILY_WORK",
+          "DATA_PROCESSING",
+          "EXPERIMENT",
+          "MEETING",
+          "PROMPT",
+          "RESEARCH_PLAN"
+        ],
+        "eligible_vectors": 180,
+        "gpu": "cuda:0",
+        "embedding_model": "intfloat/multilingual-e5-small",
+        "reranker_model": "BAAI/bge-reranker-v2-m3",
+        "llm": "configured",
+        "llm_live_verified": false
+      }
+    },
+    "T-02-before": {
+      "state": "observed",
+      "details": {
+        "report_categories": {
+          "count": 6,
+          "sha256": "ba783500a2727faa4a581e5941cd26daa160ca1edb2751d56dea13589fd19f84"
+        },
+        "reports": {
+          "count": 180,
+          "sha256": "1d0a1ae47fa8bf72afae2627093c86f5d5028c6938c25f818deafd347a3398de"
+        },
+        "report_embeddings": {
+          "count": 180,
+          "sha256": "23200b3778b94d5c60eded09da81f4719610870bca1e30a6f1ee4c09c317cc8d"
+        },
+        "experiment_reports": {
+          "count": 30,
+          "sha256": "2d6b5a019292e20f28b7780ad306d8f20d0e6378b7aa223b29f71bed657ee856"
+        },
+        "daily_work_reports": {
+          "count": 30,
+          "sha256": "08774b81d8d522fe65a4e3cbabb9bb8e9c62bd280f0c133427ce836a69781649"
+        },
+        "research_plans": {
+          "count": 30,
+          "sha256": "1b9c5167dee8e549543169b9704358aef9e6820ed17b0eb157f5da92d6a3e7af"
+        },
+        "data_processing_reports": {
+          "count": 30,
+          "sha256": "c6aeb981be354771185da8531962fdb23d076f441dca240cdcfcecc0afb23c7b"
+        },
+        "prompt_reports": {
+          "count": 30,
+          "sha256": "ec77401aded52deb79d1263b5db8668e848bbefb687a1020e3ca9dc2b55ea543"
+        },
+        "prompt_versions": {
+          "count": 60,
+          "sha256": "13975864b7baebec9910de0271a4b289b941e95d0ae55723818a9a127796a2b6"
+        },
+        "meeting_minutes": {
+          "count": 30,
+          "sha256": "b3a767cbe452431dc5987d5022db0a383a2167382ab23520bbafba7d230d27b5"
+        }
+      }
+    },
+    "T-01-test-ids": {
+      "state": "observed",
+      "details": {
+        "report_id": 63,
+        "missing_report_id": 999999
+      }
+    },
+    "T-03-vector": {
+      "state": "observed",
+      "details": {
+        "device": "cuda:0",
+        "dimension": 384,
+        "norm_squared": 1.0000000686484467,
+        "finite": true,
+        "measurement": {
+          "measurement": "live_wall_clock",
+          "tool_calls": 0,
+          "model_calls": 0,
+          "stages": [
+            {
+              "stage": "embedding_model_load",
+              "latency_ms": 3790.26
+            },
+            {
+              "stage": "query_embedding",
+              "latency_ms": 250.241
+            }
+          ],
+          "total_tokens_reported": null,
+          "usage_observed_calls": 0,
+          "usage_missing_calls": 0,
+          "latency_ms": 6077.954
+        }
+      }
+    },
+    "T-03/T-05": {
+      "state": "observed",
+      "details": {
+        "debug": {
+          "query_original": "보고서 63의 핵심 내용",
+          "query_search": [
+            "보고서 63의 핵심 내용"
+          ],
+          "category_code": null,
+          "search_counts": [
+            {
+              "query": "보고서 63의 핵심 내용",
+              "count": 1
+            }
+          ],
+          "candidate_count_raw": 1,
+          "candidate_count_after_dedup": 1,
+          "before": [
+            {
+              "report_id": 63,
+              "rank": 1,
+              "distance": 0.1782402289962618
+            }
+          ],
+          "after": [
+            {
+              "report_id": 63,
+              "rank": 1,
+              "distance": 0.1782402289962618,
+              "reranker_score": 0.0005326845566742122
+            }
+          ],
+          "reranker_input": "title + overview; tokenizer truncation max_length=512"
+        },
+        "sources": [
+          {
+            "source_id": "RPT-63",
+            "report_id": 63,
+            "title": "RAG 근거 인용 정확도 향상 계획",
+            "category_code": "RESEARCH_PLAN",
+            "revision": 1
+          }
+        ],
+        "measurement": {
+          "measurement": "live_wall_clock",
+          "tool_calls": 0,
+          "model_calls": 0,
+          "stages": [
+            {
+              "stage": "query_embedding",
+              "latency_ms": 5.531
+            },
+            {
+              "stage": "pgvector_retrieval",
+              "latency_ms": 3.048
+            },
+            {
+              "stage": "reranker_model_load",
+              "latency_ms": 4027.415
+            },
+            {
+              "stage": "cross_encoder_rerank",
+              "latency_ms": 66.074
+            }
+          ],
+          "total_tokens_reported": null,
+          "usage_observed_calls": 0,
+          "usage_missing_calls": 0,
+          "latency_ms": 4102.426
+        }
+      }
+    },
+    "T-06-lookup": {
+      "state": "observed",
+      "details": {
+        "status": "found",
+        "report_id": 63,
+        "category_code": "RESEARCH_PLAN",
+        "index_status": "ready",
+        "revision": 1,
+        "embedding_fresh": true
+      }
+    },
+    "T-04/T-06-rag": {
+      "state": "observed",
+      "details": {
+        "status": "found",
+        "sources": [
+          {
+            "source_id": "RPT-63",
+            "report_id": 63,
+            "title": "RAG 근거 인용 정확도 향상 계획",
+            "category_code": "RESEARCH_PLAN",
+            "revision": 1
+          }
+        ],
+        "metrics": {
+          "measurement": "live_wall_clock",
+          "tool_calls": 1,
+          "model_calls": 1,
+          "stages": [
+            {
+              "stage": "query_embedding",
+              "latency_ms": 5.472
+            },
+            {
+              "stage": "pgvector_retrieval",
+              "latency_ms": 2.087
+            },
+            {
+              "stage": "cross_encoder_rerank",
+              "latency_ms": 18.356
+            },
+            {
+              "stage": "rag_generation",
+              "latency_ms": 2105.544,
+              "usage": {
+                "input_tokens": 571,
+                "output_tokens": 173,
+                "total_tokens": 744
+              }
+            }
+          ],
+          "total_tokens_reported": 744,
+          "usage_observed_calls": 1,
+          "usage_missing_calls": 0,
+          "latency_ms": 2147.5
+        }
+      }
+    },
+    "T-07/T-09/T-10-rag_only": {
+      "state": "observed",
+      "details": {
+        "request_id": "rag_only",
+        "status": "completed",
+        "sources": [
+          {
+            "source_id": "RPT-63",
+            "report_id": 63,
+            "title": "RAG 근거 인용 정확도 향상 계획",
+            "category_code": "RESEARCH_PLAN",
+            "revision": 1
+          }
+        ],
+        "tool_trace": [
+          {
+            "tool_call_id": "call_ndylJT5dWDogVktPFU82vpLJ",
+            "tool": "lookup_status",
+            "status": "found"
+          },
+          {
+            "tool_call_id": "call_kY3EqupCb6PMzIqrXSExVj0J",
+            "tool": "rag_search",
+            "status": "found"
+          }
+        ],
+        "validation": {
+          "citations_match_context": true,
+          "required_tools_observed": true
+        },
+        "latency_ms": 5097.669,
+        "metrics": {
+          "measurement": "live_wall_clock",
+          "tool_calls": 2,
+          "model_calls": 3,
+          "stages": [
+            {
+              "stage": "agent_model",
+              "latency_ms": 1272.273,
+              "usage": {
+                "input_tokens": 820,
+                "output_tokens": 68,
+                "total_tokens": 888
+              }
+            },
+            {
+              "stage": "query_embedding",
+              "latency_ms": 19.334
+            },
+            {
+              "stage": "pgvector_retrieval",
+              "latency_ms": 2.583
+            },
+            {
+              "stage": "cross_encoder_rerank",
+              "latency_ms": 46.248
+            },
+            {
+              "stage": "rag_generation",
+              "latency_ms": 2118.752,
+              "usage": {
+                "input_tokens": 576,
+                "output_tokens": 192,
+                "total_tokens": 768
+              }
+            },
+            {
+              "stage": "agent_model",
+              "latency_ms": 1623.352,
+              "usage": {
+                "input_tokens": 1192,
+                "output_tokens": 192,
+                "total_tokens": 1384
+              }
+            }
+          ],
+          "total_tokens_reported": 3040,
+          "usage_observed_calls": 3,
+          "usage_missing_calls": 0,
+          "latency_ms": 5098.367
+        },
+        "human_review": "pending"
+      }
+    },
+    "T-07/T-09/T-10-db_only": {
+      "state": "observed",
+      "details": {
+        "request_id": "db_only",
+        "status": "completed",
+        "sources": [],
+        "tool_trace": [
+          {
+            "tool_call_id": "call_VYMi4a5ac2rFMxu0rYJFMRGG",
+            "tool": "lookup_status",
+            "status": "found"
+          }
+        ],
+        "validation": {
+          "citations_match_context": true,
+          "required_tools_observed": true
+        },
+        "latency_ms": 2005.58,
+        "metrics": {
+          "measurement": "live_wall_clock",
+          "tool_calls": 1,
+          "model_calls": 2,
+          "stages": [
+            {
+              "stage": "agent_model",
+              "latency_ms": 954.415,
+              "usage": {
+                "input_tokens": 824,
+                "output_tokens": 18,
+                "total_tokens": 842
+              }
+            },
+            {
+              "stage": "agent_model",
+              "latency_ms": 1040.137,
+              "usage": {
+                "input_tokens": 895,
+                "output_tokens": 38,
+                "total_tokens": 933
+              }
+            }
+          ],
+          "total_tokens_reported": 1775,
+          "usage_observed_calls": 2,
+          "usage_missing_calls": 0,
+          "latency_ms": 2006.009
+        },
+        "human_review": "pending"
+      }
+    },
+    "T-07/T-09/T-10-both": {
+      "state": "observed",
+      "details": {
+        "request_id": "both",
+        "status": "completed",
+        "sources": [
+          {
+            "source_id": "RPT-63",
+            "report_id": 63,
+            "title": "RAG 근거 인용 정확도 향상 계획",
+            "category_code": "RESEARCH_PLAN",
+            "revision": 1
+          }
+        ],
+        "tool_trace": [
+          {
+            "tool_call_id": "call_WgbeHTFq9bGYHzaPTYK70ifJ",
+            "tool": "rag_search",
+            "status": "found"
+          },
+          {
+            "tool_call_id": "call_hv8MMLYTn2SKvPxA2C3AzOiS",
+            "tool": "lookup_status",
+            "status": "found"
+          }
+        ],
+        "validation": {
+          "citations_match_context": true,
+          "required_tools_observed": true
+        },
+        "latency_ms": 3938.045,
+        "metrics": {
+          "measurement": "live_wall_clock",
+          "tool_calls": 2,
+          "model_calls": 3,
+          "stages": [
+            {
+              "stage": "agent_model",
+              "latency_ms": 1253.305,
+              "usage": {
+                "input_tokens": 828,
+                "output_tokens": 68,
+                "total_tokens": 896
+              }
+            },
+            {
+              "stage": "query_embedding",
+              "latency_ms": 10.751
+            },
+            {
+              "stage": "pgvector_retrieval",
+              "latency_ms": 1.771
+            },
+            {
+              "stage": "cross_encoder_rerank",
+              "latency_ms": 88.341
+            },
+            {
+              "stage": "rag_generation",
+              "latency_ms": 1325.737,
+              "usage": {
+                "input_tokens": 584,
+                "output_tokens": 154,
+                "total_tokens": 738
+              }
+            },
+            {
+              "stage": "agent_model",
+              "latency_ms": 1245.199,
+              "usage": {
+                "input_tokens": 1161,
+                "output_tokens": 178,
+                "total_tokens": 1339
+              }
+            }
+          ],
+          "total_tokens_reported": 2973,
+          "usage_observed_calls": 3,
+          "usage_missing_calls": 0,
+          "latency_ms": 3938.287
+        },
+        "human_review": "pending"
+      }
+    },
+    "T-07/T-09/T-10-no_answer": {
+      "state": "observed",
+      "details": {
+        "request_id": "no_answer",
+        "status": "insufficient_evidence",
+        "sources": [],
+        "tool_trace": [
+          {
+            "tool_call_id": "call_0omqzvTXqhLGp8Dm2MGpjS6c",
+            "tool": "rag_search",
+            "status": "not_found"
+          }
+        ],
+        "validation": {
+          "citations_match_context": true,
+          "required_tools_observed": true
+        },
+        "latency_ms": 3626.284,
+        "metrics": {
+          "measurement": "live_wall_clock",
+          "tool_calls": 1,
+          "model_calls": 3,
+          "stages": [
+            {
+              "stage": "agent_model",
+              "latency_ms": 832.238,
+              "usage": {
+                "input_tokens": 825,
+                "output_tokens": 41,
+                "total_tokens": 866
+              }
+            },
+            {
+              "stage": "query_embedding",
+              "latency_ms": 10.862
+            },
+            {
+              "stage": "pgvector_retrieval",
+              "latency_ms": 3.702
+            },
+            {
+              "stage": "cross_encoder_rerank",
+              "latency_ms": 310.564
+            },
+            {
+              "stage": "rag_generation",
+              "latency_ms": 925.631,
+              "usage": {
+                "input_tokens": 913,
+                "output_tokens": 63,
+                "total_tokens": 976
+              }
+            },
+            {
+              "stage": "agent_model",
+              "latency_ms": 1532.202,
+              "usage": {
+                "input_tokens": 926,
+                "output_tokens": 38,
+                "total_tokens": 964
+              }
+            }
+          ],
+          "total_tokens_reported": 2806,
+          "usage_observed_calls": 3,
+          "usage_missing_calls": 0,
+          "latency_ms": 3626.463
+        },
+        "human_review": "pending"
+      }
+    },
+    "T-07/T-09/T-10-missing": {
+      "state": "observed",
+      "details": {
+        "request_id": "missing",
+        "status": "insufficient_evidence",
+        "sources": [],
+        "tool_trace": [
+          {
+            "tool_call_id": "call_EL35dq9YRDfHT26VJSyp40Ef",
+            "tool": "lookup_status",
+            "status": "not_found"
+          }
+        ],
+        "validation": {
+          "citations_match_context": true,
+          "required_tools_observed": true
+        },
+        "latency_ms": 1827.099,
+        "metrics": {
+          "measurement": "live_wall_clock",
+          "tool_calls": 1,
+          "model_calls": 2,
+          "stages": [
+            {
+              "stage": "agent_model",
+              "latency_ms": 841.774,
+              "usage": {
+                "input_tokens": 825,
+                "output_tokens": 19,
+                "total_tokens": 844
+              }
+            },
+            {
+              "stage": "agent_model",
+              "latency_ms": 974.579,
+              "usage": {
+                "input_tokens": 870,
+                "output_tokens": 41,
+                "total_tokens": 911
+              }
+            }
+          ],
+          "total_tokens_reported": 1755,
+          "usage_observed_calls": 2,
+          "usage_missing_calls": 0,
+          "latency_ms": 1827.263
+        },
+        "human_review": "pending"
+      }
+    },
+    "T-02-after": {
+      "state": "observed",
+      "details": {
+        "report_categories": {
+          "count": 6,
+          "sha256": "ba783500a2727faa4a581e5941cd26daa160ca1edb2751d56dea13589fd19f84"
+        },
+        "reports": {
+          "count": 180,
+          "sha256": "1d0a1ae47fa8bf72afae2627093c86f5d5028c6938c25f818deafd347a3398de"
+        },
+        "report_embeddings": {
+          "count": 180,
+          "sha256": "23200b3778b94d5c60eded09da81f4719610870bca1e30a6f1ee4c09c317cc8d"
+        },
+        "experiment_reports": {
+          "count": 30,
+          "sha256": "2d6b5a019292e20f28b7780ad306d8f20d0e6378b7aa223b29f71bed657ee856"
+        },
+        "daily_work_reports": {
+          "count": 30,
+          "sha256": "08774b81d8d522fe65a4e3cbabb9bb8e9c62bd280f0c133427ce836a69781649"
+        },
+        "research_plans": {
+          "count": 30,
+          "sha256": "1b9c5167dee8e549543169b9704358aef9e6820ed17b0eb157f5da92d6a3e7af"
+        },
+        "data_processing_reports": {
+          "count": 30,
+          "sha256": "c6aeb981be354771185da8531962fdb23d076f441dca240cdcfcecc0afb23c7b"
+        },
+        "prompt_reports": {
+          "count": 30,
+          "sha256": "ec77401aded52deb79d1263b5db8668e848bbefb687a1020e3ca9dc2b55ea543"
+        },
+        "prompt_versions": {
+          "count": 60,
+          "sha256": "13975864b7baebec9910de0271a4b289b941e95d0ae55723818a9a127796a2b6"
+        },
+        "meeting_minutes": {
+          "count": 30,
+          "sha256": "b3a767cbe452431dc5987d5022db0a383a2167382ab23520bbafba7d230d27b5"
+        }
+      }
+    },
+    "T-02-unchanged": {
+      "state": "observed",
+      "equal": true
+    }
+  },
+  "human_review": "pending",
+  "note": "observed는 측정됨을 뜻하며 자동 합격 인증이 아님. T-08 HTTP는 Postman 별도."
+}
